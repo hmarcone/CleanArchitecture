@@ -15,7 +15,8 @@ namespace CleanArch.Infra.Data.EntityConfiguration
             builder.HasData(
                 new Product { Id = 1, Name = "Caderno", Description = "Caderno espiral 100 fôlhas", Price = 9.45m },
                 new Product { Id = 2, Name = "Borracha", Description = "Borracha branca pequena", Price = 3.75m },
-                new Product { Id = 3, Name = "Estojo", Description = "Estojo de plástico pequeno", Price = 5.25m }
+                new Product { Id = 3, Name = "Estojo", Description = "Estojo de plástico pequeno", Price = 5.25m },
+                new Product { Id = 4, Name = "Lápis", Description = "Lápis preto", Price = 4.25m }
             );
         }
     }
