@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Interfaces;
 using CleanArch.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanArch.MVC.Controllers
@@ -38,5 +39,76 @@ namespace CleanArch.MVC.Controllers
             }
             return View(product);
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var productVM = await _productService.GetById(id);
+
+            if (productVM == null) return NotFound();
+
+            return View(productVM);
+        }
+
+        [HttpPost()]
+        public IActionResult Edit([Bind("Id,Name,Description,Price")] ProductViewModel productVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _productService.Update(productVM);
+                    ViewBag.Sucesso = "Produto Atualizado!";
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(productVM);
+        }
+
+        // GET: ProductsVM/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productVM = await _productService.GetById(id);
+
+            if (productVM == null)
+            {
+                return NotFound();
+            }
+
+            return View(productVM);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var productVM = await _productService.GetById(id);
+
+            if (productVM == null) return NotFound();
+
+            return View(productVM);
+        }
+
+        [HttpPost(), ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _productService.Remove(id);
+            ViewBag.Sucesso = "Produto deletado com sucesso!";
+            return RedirectToAction("Index");
+        }
+
     }
 }
